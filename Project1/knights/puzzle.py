@@ -132,7 +132,7 @@ knowledge3 = And(
             And(CKnight, Not(CKnave)), 
             And(Not(CKnight), CKnave)
         )
-    ), 
+    )
 )
 
 
