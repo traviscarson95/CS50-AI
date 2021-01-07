@@ -13,16 +13,8 @@ CKnave = Symbol("C is a Knave")
 # A says "I am both a knight and a knave."
 # => And(AKnight, AKnave)
 knowledge0 = And(
-    # Rules of Knights and Knaves
-    Or(
-        And(AKnight, Not(AKnave)), 
-        And(Not(AKnight), AKnave)
-    ), 
-    # If A is a knight, their statement will be true OR if A is a knave their statement will be false
-    Or(
-        And(AKnight, And(AKnight, AKnave)), 
-        And(AKnave, Not(And(AKnight, AKnave)))
-    )
+    Biconditional(AKnight, Not(AKnave)),
+    Biconditional(AKnight, And(AKnight, AKnave))
 )
 
 # Puzzle 1
@@ -30,23 +22,9 @@ knowledge0 = And(
 # B says nothing.
 # A says => (AKnight & (AKnave & BKnave)) || (AKnave & ~(AKnave & BKnave))
 knowledge1 = And(
-    # A is a knight or a knave, and B is a knight or a knave
-    And(
-        # A is a knight or a knave, but not both
-        Or(
-            And(AKnight, Not(AKnave)), 
-            And(Not(AKnight), AKnave)
-        ),
-        # B is a knight or a knave, but not both
-        Or(
-            And(BKnight, Not(BKnave)), 
-            And(Not(BKnight), BKnave)
-        )
-    ),     
-    Or(
-        And(AKnight, And(AKnave, BKnave)), 
-        And(AKnave, Not(And(AKnave, BKnave)))
-    )
+    Biconditional(AKnight, Not(AKnave)),
+    Biconditional(BKnight, Not(BKnave)),
+    Biconditional(AKnight, And(AKnave, BKnave))
 )
 
 # Puzzle 2
@@ -55,53 +33,10 @@ knowledge1 = And(
 # A says => (AKnight && BKnight) || (AKnave && BKNave)
 # B says => (AKnight && BKnave) || (AKnave && BKnight)
 knowledge2 = And(
-    # A is a knight or a knave, and B is a knight or a knave
-    And(
-        # A is a knight or a knave, but not both
-        Or(
-            And(AKnight, Not(AKnave)), 
-            And(Not(AKnight), AKnave)
-        ),
-        # B is a knight or a knave, but not both
-        Or(
-            And(BKnight, Not(BKnave)), 
-            And(Not(BKnight), BKnave)
-        )
-    ),     
-    And(
-        Or(
-            And(AKnight, 
-                Or(
-                    And(AKnight, BKnight), 
-                    And(AKnave, BKnave)
-                )
-            ), 
-            And(AKnave, 
-                Not(
-                    Or(
-                        And(AKnight, BKnight), 
-                        And(AKnave, BKnave)
-                    )
-                )
-            )
-        ),
-        Or(
-            And(BKnight, 
-                Or(
-                    And(AKnight, BKnave), 
-                    And(AKnave, BKnight)
-                )
-            ),
-            And(BKnave, 
-                Not(
-                    Or(
-                        And(AKnight, BKnave), 
-                        And(AKnave, BKnight)
-                    )
-                )
-            )
-        )
-    )
+    Biconditional(AKnight, Not(AKnave)),
+    Biconditional(BKnight, Not(BKnave)),
+    Biconditional(AKnight, And(AKnight, BKnight)),
+    Biconditional(BKnight, AKnave)
 )
 
 # Puzzle 3
@@ -115,24 +50,13 @@ knowledge2 = And(
 # B says => CKnave
 # C says => AKnight
 knowledge3 = And(
-    # A is a knight or a knave, B is a knight or a knave, and C is a knight or a knave
-    And(
-        # A is a knight or a knave, but not both
-        Or(
-            And(AKnight, Not(AKnave)), 
-            And(Not(AKnight), AKnave)
-        ),
-        # B is a knight or a knave, but not both
-        Or(
-            And(BKnight, Not(BKnave)), 
-            And(Not(BKnight), BKnave)
-        ),
-        # C is a knight or a knave, but not both
-        Or(
-            And(CKnight, Not(CKnave)), 
-            And(Not(CKnight), CKnave)
-        )
-    )
+    Biconditional(AKnight, Not(AKnave)),
+    Biconditional(BKnight, Not(BKnave)),
+    Biconditional(CKnight, Not(CKnave)),
+    Biconditional(AKnight, Or(AKnight, AKnave)),
+    Biconditional(BKnight, AKnave),
+    Biconditional(BKnight, CKnave),
+    Biconditional(CKnight, AKnight)
 )
 
 
