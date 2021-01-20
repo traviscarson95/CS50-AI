@@ -14,7 +14,7 @@ CKnave = Symbol("C is a Knave")
 # => And(AKnight, AKnave)
 knowledge0 = And(
     Biconditional(AKnight, Not(AKnave)),
-    Biconditional(AKnight, And(AKnight, AKnave))
+    Implication(AKnight, And(AKnight, AKnave))
 )
 
 # Puzzle 1
@@ -24,7 +24,8 @@ knowledge0 = And(
 knowledge1 = And(
     Biconditional(AKnight, Not(AKnave)),
     Biconditional(BKnight, Not(BKnave)),
-    Biconditional(AKnight, And(AKnave, BKnave))
+    Implication(AKnight, And(AKnave, BKnave)),
+    Implication(AKnave, Not(And(AKnave, BKnave)))
 )
 
 # Puzzle 2
@@ -35,8 +36,9 @@ knowledge1 = And(
 knowledge2 = And(
     Biconditional(AKnight, Not(AKnave)),
     Biconditional(BKnight, Not(BKnave)),
-    Biconditional(AKnight, And(AKnight, BKnight)),
-    Biconditional(BKnight, AKnave)
+    Implication(AKnight, And(AKnight, BKnight)),
+    Biconditional(BKnight, AKnave),
+    Biconditional(BKnave, AKnight)
 )
 
 # Puzzle 3
@@ -53,10 +55,14 @@ knowledge3 = And(
     Biconditional(AKnight, Not(AKnave)),
     Biconditional(BKnight, Not(BKnave)),
     Biconditional(CKnight, Not(CKnave)),
-    Biconditional(AKnight, Or(AKnight, AKnave)),
-    Biconditional(BKnight, AKnave),
-    Biconditional(BKnight, CKnave),
-    Biconditional(CKnight, AKnight)
+    Implication(AKnight, Or(AKnight, AKnave)),
+    Implication(AKnave, Not(Or(AKnight, AKnave))),
+    Implication(BKnight, Implication(AKnight, AKnave)),
+    Implication(BKnave, Not(Implication(AKnight, AKnave))),
+    Implication(BKnight, CKnave),
+    Implication(BKnave, Not(CKnave)),
+    Implication(CKnight, AKnight),
+    Implication(CKnave, Not(AKnight))
 )
 
 
